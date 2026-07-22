@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}
+Categorize Transactions
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+
+Categorize Transactions
+
+</h2>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-bordered">
+
+<thead class="table-primary">
+
+<tr>
+
+<th>Date</th>
+
+<th>Description</th>
+
+<th>Amount</th>
+
+<th>Category</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for transaction in transactions %}
+
+<tr>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<td>{{ transaction.date }}</td>
+
+<td>{{ transaction.description }}</td>
+
+<td>₹ {{ transaction.amount }}</td>
+
+<td>
+
+<input
+type="hidden"
+name="transaction_id"
+value="{{ transaction.id }}">
+
+<select
+name="category"
+class="form-select">
+
+{% for category in categories %}
+
+<option
+value="{{ category.id }}"
+{% if transaction.category == category %}
+selected
+{% endif %}
+>
+
+{{ category.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</td>
+
+<td>
+
+<button
+class="btn btn-success">
+
+Save
+
+</button>
+
+</td>
+
+</form>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

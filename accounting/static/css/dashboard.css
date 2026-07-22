@@ -1,0 +1,222 @@
+/* ===========================
+   Dashboard Background
+=========================== */
+
+body{
+    background:#f4f7fb;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card{
+
+    border:none;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.35s ease;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 20px 35px rgba(0,0,0,.18);
+
+}
+
+/* ===========================
+   Statistics Cards
+=========================== */
+
+.stats-card{
+
+    color:white;
+
+    min-height:160px;
+
+    position:relative;
+
+}
+
+.stats-card i{
+
+    font-size:55px;
+
+    opacity:.25;
+
+    position:absolute;
+
+    right:20px;
+
+    bottom:15px;
+
+}
+
+.stats-card h2{
+
+    font-weight:bold;
+
+    margin-top:15px;
+
+}
+
+.income-card{
+
+    background:linear-gradient(135deg,#16a34a,#22c55e);
+
+}
+
+.expense-card{
+
+    background:linear-gradient(135deg,#dc2626,#ef4444);
+
+}
+
+.balance-card{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+}
+
+.transaction-card{
+
+    background:linear-gradient(135deg,#7c3aed,#8b5cf6);
+
+}
+
+/* ===========================
+   Chart Cards
+=========================== */
+
+.chart-card{
+
+    border-radius:20px;
+
+    background:white;
+
+}
+
+/* ===========================
+   Timeline
+=========================== */
+
+.timeline-item{
+
+    border-left:4px solid #0d6efd;
+
+    padding-left:15px;
+
+    margin-bottom:20px;
+
+}
+
+.timeline-item:last-child{
+
+    margin-bottom:0;
+
+}
+
+/* ===========================
+   Monthly Summary
+=========================== */
+
+.summary-card{
+
+    text-align:center;
+
+    padding:25px;
+
+}
+
+.summary-card h3{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    margin-top:10px;
+
+}
+
+.summary-card span{
+
+    color:gray;
+
+}
+
+/* ===========================
+   Dashboard Header
+=========================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.page-header h2{
+
+    font-weight:700;
+
+}
+
+.page-header small{
+
+    color:#777;
+
+}
+
+/* ===========================
+   Chart Height
+=========================== */
+
+canvas{
+
+    max-height:350px;
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
+
+.btn{
+
+    border-radius:10px;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:768px){
+
+.stats-card{
+
+margin-bottom:20px;
+
+}
+
+.page-header{
+
+display:block;
+
+}
+
+}

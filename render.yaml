@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: fintrack
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn fintrac.wsgi:application"

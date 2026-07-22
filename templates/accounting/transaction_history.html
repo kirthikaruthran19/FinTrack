@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}
+Transaction History
+{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">
+Transaction History
+</h2>
+
+<form method="GET" class="row g-3 mb-4">
+
+<div class="col-md-4">
+
+<input
+type="text"
+name="search"
+class="form-control"
+placeholder="Search description..."
+value="{{ request.GET.search }}">
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="category"
+class="form-select">
+
+<option value="">All Categories</option>
+
+{% for c in categories %}
+
+<option
+value="{{ c.id }}"
+{% if request.GET.category == c.id|stringformat:"s" %}
+selected
+{% endif %}
+>
+
+{{ c.name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="type"
+class="form-select">
+
+<option value="">All Types</option>
+
+<option value="Income">Income</option>
+
+<option value="Expense">Expense</option>
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-primary w-100">
+
+Search
+
+</button>
+
+</div>
+
+</form>
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<table class="table table-hover">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>Date</th>
+<th>Description</th>
+<th>Category</th>
+<th>Type</th>
+<th>Amount</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for t in transactions %}
+
+<tr>
+
+<td>{{ t.date }}</td>
+
+<td>{{ t.description }}</td>
+
+<td>
+
+{% if t.category %}
+
+{{ t.category.name }}
+
+{% else %}
+
+-
+
+{% endif %}
+
+</td>
+
+<td>{{ t.type }}</td>
+
+<td>₹ {{ t.amount }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="5" class="text-center">
+
+No Transactions Found
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

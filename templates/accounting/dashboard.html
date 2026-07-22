@@ -1,0 +1,565 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h2>Financial Dashboard</h2>
+
+            <small>Welcome to FinTrack Financial Management System</small>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics Cards -->
+
+    <div class="row g-4 mb-4">
+
+        <!-- Income -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card stats-card income-card">
+
+                <div class="card-body">
+
+                    <h6>Total Income</h6>
+
+                    <h2>₹ {{ total_income }}</h2>
+
+                    <p class="mb-0">
+                        Income Received
+                    </p>
+
+                    <i class="fa-solid fa-wallet"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Expense -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card stats-card expense-card">
+
+                <div class="card-body">
+
+                    <h6>Total Expense</h6>
+
+                    <h2>₹ {{ total_expense }}</h2>
+
+                    <p class="mb-0">
+                        Total Spending
+                    </p>
+
+                    <i class="fa-solid fa-credit-card"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Balance -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card stats-card balance-card">
+
+                <div class="card-body">
+
+                    <h6>Current Balance</h6>
+
+                    <h2>₹ {{ balance }}</h2>
+
+                    <p class="mb-0">
+                        Available Balance
+                    </p>
+
+                    <i class="fa-solid fa-building-columns"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Transactions -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card stats-card transaction-card">
+
+                <div class="card-body">
+
+                    <h6>Total Transactions</h6>
+
+                    <h2>{{ total_transactions }}</h2>
+
+                    <p class="mb-0">
+                        Transactions Recorded
+                    </p>
+
+                    <i class="fa-solid fa-chart-column"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+
+    <div class="row">
+
+        <!-- Income Expense -->
+
+        <div class="col-lg-8 mb-4">
+
+            <div class="card chart-card">
+
+                <div class="card-header">
+
+                    <h5>
+
+                        <i class="fa-solid fa-chart-column"></i>
+
+                        Monthly Income vs Expense
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="incomeExpenseChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Pie -->
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card chart-card">
+
+                <div class="card-header">
+
+                    <h5>
+
+                        <i class="fa-solid fa-chart-pie"></i>
+
+                        Expense Categories
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="categoryChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Trend + Timeline -->
+
+    <div class="row">
+
+        <!-- Balance Trend -->
+
+        <div class="col-lg-8 mb-4">
+
+            <div class="card chart-card">
+
+                <div class="card-header">
+
+                    <h5>
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        Balance Trend
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    <canvas id="balanceChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Timeline -->
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card chart-card">
+
+                <div class="card-header">
+
+                    <h5>
+
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+
+                        Recent Activity
+
+                    </h5>
+
+                </div>
+
+                <div class="card-body">
+
+                    {% for t in recent_transactions %}
+
+                    <div class="timeline-item">
+
+                        <strong>
+
+                            {{ t.description }}
+
+                        </strong>
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{ t.date }}
+
+                        </small>
+
+                        <br><br>
+
+                        {% if t.type == "Income" %}
+
+                        <span class="badge bg-success">
+
+                            + ₹ {{ t.amount }}
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-danger">
+
+                            - ₹ {{ t.amount }}
+
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% empty %}
+
+                    <p>No Recent Transactions</p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Monthly Summary -->
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card summary-card">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-arrow-trend-up text-success fa-2x"></i>
+
+                    <h6 class="mt-3">
+
+                        Income This Month
+
+                    </h6>
+
+                    <h3>
+
+                        ₹ {{ month_income }}
+
+                    </h3>
+
+                    <span>Current Month</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card summary-card">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-arrow-trend-down text-danger fa-2x"></i>
+
+                    <h6 class="mt-3">
+
+                        Expense This Month
+
+                    </h6>
+
+                    <h3>
+
+                        ₹ {{ month_expense }}
+
+                    </h3>
+
+                    <span>Current Month</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card summary-card">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-piggy-bank text-primary fa-2x"></i>
+
+                    <h6 class="mt-3">
+
+                        Savings
+
+                    </h6>
+
+                    <h3>
+
+                        ₹ {{ month_savings }}
+
+                    </h3>
+
+                    <span>Current Month</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card summary-card">
+
+                <div class="card-body">
+
+                    <i class="fa-solid fa-robot text-warning fa-2x"></i>
+
+                    <h6 class="mt-3">
+
+                        AI Financial Score
+
+                    </h6>
+
+                    <h3>
+
+                        {{ ai_score }}%
+
+                    </h3>
+
+                    <span>Excellent</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const monthlyLabels = {{ monthly_labels|safe }};
+const monthlyIncome = {{ monthly_income|safe }};
+const monthlyExpense = {{ monthly_expense|safe }};
+
+new Chart(document.getElementById("incomeExpenseChart"), {
+
+    type: "bar",
+
+    data: {
+
+        labels: monthlyLabels,
+
+        datasets: [
+
+            {
+
+                label: "Income",
+
+                data: monthlyIncome,
+
+                backgroundColor: "#22c55e",
+
+                borderRadius: 8
+
+            },
+
+            {
+
+                label: "Expense",
+
+                data: monthlyExpense,
+
+                backgroundColor: "#ef4444",
+
+                borderRadius: 8
+
+            }
+
+        ]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                position: "top"
+
+            }
+
+        }
+
+    }
+
+});
+
+const categoryLabels = {{ category_labels|safe }};
+const categoryAmounts = {{ category_amounts|safe }};
+
+new Chart(document.getElementById("categoryChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: categoryLabels,
+
+        datasets: [
+
+            {
+
+                data: categoryAmounts
+
+            }
+
+        ]
+
+    },
+
+    options: {
+
+        responsive: true
+
+    }
+
+});
+
+const trendLabels = {{ trend_labels|safe }};
+const trendBalance = {{ trend_balance|safe }};
+
+new Chart(document.getElementById("balanceChart"), {
+
+    type: "line",
+
+    data: {
+
+        labels: trendLabels,
+
+        datasets: [
+
+            {
+
+                label: "Balance",
+
+                data: trendBalance,
+
+                borderColor: "#2563eb",
+
+                borderWidth: 3,
+
+                tension: 0.4,
+
+                fill: false
+
+            }
+
+        ]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+
+                display: true
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

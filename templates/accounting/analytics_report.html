@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}
+AI Analytics
+{% endblock %}
+
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h2 class="mb-4">
+
+AI Financial Analytics
+
+</h2>
+
+<div class="row">
+
+<div class="col-md-4">
+
+<div class="card shadow mb-4">
+
+<div class="card-header bg-primary text-white">
+
+Predictions
+
+</div>
+
+<div class="card-body">
+
+<ul>
+
+{% for item in result.predictions %}
+
+<li>{{ item }}</li>
+
+{% empty %}
+
+<li>No predictions available.</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow mb-4">
+
+<div class="card-header bg-success text-white">
+
+Insights
+
+</div>
+
+<div class="card-body">
+
+<ul>
+
+{% for item in result.insights %}
+
+<li>{{ item }}</li>
+
+{% empty %}
+
+<li>No insights available.</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card shadow mb-4">
+
+<div class="card-header bg-warning">
+
+Recommendations
+
+</div>
+
+<div class="card-body">
+
+<ul>
+
+{% for item in result.recommendations %}
+
+<li>{{ item }}</li>
+
+{% empty %}
+
+<li>No recommendations available.</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card shadow mt-4">
+
+<div class="card-body">
+
+<h4>
+
+Transaction History
+
+</h4>
+
+<canvas id="financeChart"></canvas>
+
+</div>
+
+</div>
+
+<script>
+
+const labels = [
+
+{% for t in transactions %}
+
+"{{ t.date }}",
+
+{% endfor %}
+
+];
+
+const amounts = [
+
+{% for t in transactions %}
+
+{{ t.amount }},
+
+{% endfor %}
+
+];
+
+new Chart(
+
+document.getElementById("financeChart"),
+
+{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+label:"Transaction Amount",
+
+data:amounts,
+
+borderWidth:3,
+
+fill:false
+
+}]
+
+}
+
+}
+
+);
+
+</script>
+
+{% endblock %}
